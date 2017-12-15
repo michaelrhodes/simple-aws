@@ -1,10 +1,10 @@
-var ses = require('aws-sdk/clients/ses')
+var SES = require('aws-sdk/clients/ses')
 
 module.exports = email
 
 function email (opts) {
   var charset = opts.charset || 'utf-8'
-  var client = new ses({
+  var client = new SES({
     apiVersion: opts.version || '2010-12-01',
     accessKeyId: opts.key,
     secretAccessKey: opts.secret,
@@ -39,6 +39,6 @@ function email (opts) {
       Data: opts.text
     }
 
-    client.sendEmail(params, cb)
+    client.sendEmail(params, cb || function () {})
   }
 }

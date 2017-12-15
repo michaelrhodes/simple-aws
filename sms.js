@@ -1,9 +1,9 @@
-var sns = require('aws-sdk/clients/sns')
+var SNS = require('aws-sdk/clients/sns')
 
 module.exports = sms
 
 function sms (opts) {
-  var client = new sns({
+  var client = new SNS({
     apiVersion: opts.version || '2010-03-31',
     accessKeyId: opts.key,
     secretAccessKey: opts.secret,
@@ -14,8 +14,8 @@ function sms (opts) {
 
   function send (opts, cb) {
     var params = {
-      Message: opts.message,
-      PhoneNumber: opts.number,
+      PhoneNumber: opts.to,
+      Message: opts.text,
       MessageAttributes: {
         'AWS.SNS.SMS.SMSType': {
           DataType: 'String',
@@ -24,13 +24,13 @@ function sms (opts) {
       }
     }
 
-    if (opts.sender) {
+    if (opts.from) {
       params.MessageAttributes['AWS.SNS.SMS.SenderID'] = {
         DataType: 'String',
-        StringValue: opts.sender
+        StringValue: opts.from
       }
     }
 
-    client.publish(params, cb)
+    client.publish(params, cb || function () {})
   }
 }
