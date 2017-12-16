@@ -2,10 +2,10 @@
   "name": "simple-aws",
   "author": "Michael Rhodes",
   "description": "a collection of simple aws functions",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "license": "MIT",
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "~2.167.0"
-  },
-  "license": "MIT"
+  }
 }
